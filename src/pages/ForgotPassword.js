@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { AUTH_API_URL } from '../components/config';
 
 const Page = styled.div`
   display: flex;
@@ -252,7 +253,7 @@ const ForgotPassword = () => {
     setSuccessMessage('');
 
     try {
-      const res = await fetch('http://localhost:8080/api/v1/forgot-password', {
+      const res = await fetch(`${AUTH_API_URL}/api/v1/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: data.email })

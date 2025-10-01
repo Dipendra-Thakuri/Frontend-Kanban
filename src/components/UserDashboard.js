@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import KanbanBoard from './KanbanBoard';
+import { KANBAN_API_URL } from './config';
 
 const DashboardContainer = styled.div`
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -221,7 +222,7 @@ const UserDashboard = () => {
     
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:8081/api/v1/boards', {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/boards`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -272,7 +273,7 @@ const UserDashboard = () => {
       let completedTasks = 0;
 
       for (const board of boardList) {
-        const response = await fetch(`http://localhost:8081/api/v1/tasks/board/${board.id}`, {
+        const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/board/${board.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -301,7 +302,7 @@ const UserDashboard = () => {
 
     for (const board of boardList) {
       try {
-        const response = await fetch(`http://localhost:8081/api/v1/tasks/board/${board.id}`, {
+        const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/board/${board.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'

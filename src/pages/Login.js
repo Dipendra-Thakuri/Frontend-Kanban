@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { AUTH_API_URL } from '../components/config';
 
 const Page = styled.div`
   display: flex;
@@ -255,7 +256,7 @@ const Login = () => {
     setSuccessMessage('');
 
     try {
-      const res = await fetch('http://localhost:8080/api/v1/login', {
+      const res = await fetch(`${AUTH_API_URL}/api/v1/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

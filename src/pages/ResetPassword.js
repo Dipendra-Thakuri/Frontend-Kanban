@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { AUTH_API_URL } from '../components/config';
 
 const Page = styled.div`
   display: flex;
@@ -272,7 +273,7 @@ const ResetPassword = () => {
     setSuccessMessage('');
 
     try {
-      const res = await fetch('http://localhost:8080/api/v1/reset-password', {
+      const res = await fetch(`${AUTH_API_URL}/api/v1/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

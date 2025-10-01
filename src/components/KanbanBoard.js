@@ -1,6 +1,7 @@
 // src/components/KanbanBoard.js
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { AUTH_API_URL, KANBAN_API_URL } from './config';
 
 const BoardContainer = styled.div`
   display: flex;
@@ -650,7 +651,7 @@ const KanbanBoard = ({ board, onTaskUpdate }) => {
   const fetchCurrentUser = useCallback(async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:8080/api/v1/auth/profile', {
+      const response = await fetch(`${AUTH_API_URL}/api/v1/auth/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -684,7 +685,7 @@ const KanbanBoard = ({ board, onTaskUpdate }) => {
     try {
       setLoadingUsers(true);
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:8080/api/v1/admin/users', {
+      const response = await fetch(`${AUTH_API_URL}/api/v1/admin/users`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -711,7 +712,7 @@ const fetchTasks = useCallback(async () => {
   try {
     const token = localStorage.getItem('auth_token');
     // Add query parameter to fetch only non-archived tasks
-    const response = await fetch(`http://localhost:8081/api/v1/tasks/board/${board.id}?archived=false`, {
+    const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/board/${board.id}?archived=false`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -736,7 +737,7 @@ const fetchTasks = useCallback(async () => {
   const fetchArchivedTasks = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:8081/api/v1/tasks/archived', {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/archived`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -755,7 +756,7 @@ const fetchTasks = useCallback(async () => {
   const handleRestoreTask = async (taskId) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`http://localhost:8081/api/v1/tasks/${taskId}/restore`, {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/${taskId}/restore`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -823,7 +824,7 @@ const fetchTasks = useCallback(async () => {
 
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`http://localhost:8081/api/v1/tasks/${draggedTask.id}`, {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/${draggedTask.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -867,7 +868,7 @@ const fetchTasks = useCallback(async () => {
 
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`http://localhost:8081/api/v1/tasks/${taskId}`, {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/${taskId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -951,8 +952,8 @@ const fetchTasks = useCallback(async () => {
     try {
       const token = localStorage.getItem('auth_token');
       const url = editingTask 
-        ? `http://localhost:8081/api/v1/tasks/${editingTask.id}`
-        : 'http://localhost:8081/api/v1/tasks';
+        ? `${KANBAN_API_URL}/api/v1/tasks/${editingTask.id}`
+        : `${KANBAN_API_URL}/api/v1/tasks`;
       
       const method = editingTask ? 'PUT' : 'POST';
 

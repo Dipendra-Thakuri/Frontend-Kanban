@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { AUTH_API_URL } from '../components/config';
 
 const Page = styled.div`
   display: flex;
@@ -321,7 +322,7 @@ const Register = () => {
 
     try {
       // Check if user already exists
-      const checkRes = await fetch(`http://localhost:8080/api/v1/register?email=${encodeURIComponent(data.email.trim())}`);
+      const checkRes = await fetch(`${AUTH_API_URL}/api/v1/register?email=${encodeURIComponent(data.email.trim())}`);
       
       if (!checkRes.ok) {
         throw new Error('Failed to check existing users');
@@ -343,7 +344,7 @@ const Register = () => {
         password: data.password
       };
 
-      const res = await axios.post('http://localhost:8080/api/v1/register', registrationData, {
+      const res = await axios.post(`${AUTH_API_URL}/api/v1/register`, registrationData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'

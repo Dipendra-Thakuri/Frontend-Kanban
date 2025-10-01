@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { KANBAN_API_URL } from '../components/config';
 
 const DashboardContainer = styled.div`
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -328,7 +329,7 @@ const Dashboard = () => {
       const token = localStorage.getItem('auth_token');
       
       // Fetch boards
-      const boardsResponse = await fetch('http://localhost:8081/api/v1/boards', {
+      const boardsResponse = await fetch(`${KANBAN_API_URL}/api/v1/boards`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -342,7 +343,7 @@ const Dashboard = () => {
 
         // Fetch tasks for each board
         for (const board of boards) {
-          const tasksResponse = await fetch(`http://localhost:8081/api/v1/tasks/board/${board.id}`, {
+          const tasksResponse = await fetch(`${KANBAN_API_URL}/api/v1/tasks/board/${board.id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
@@ -378,7 +379,7 @@ const Dashboard = () => {
   const fetchArchivedTasks = async () => {
   try {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch('http://localhost:8081/api/v1/tasks/archived', {
+    const response = await fetch(`${KANBAN_API_URL}/api/v1/tasks/archived`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

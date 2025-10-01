@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiBell } from 'react-icons/fi';
+import { KANBAN_API_URL } from './config';
 
 const NotificationContainer = styled.div`
   position: relative;
@@ -197,7 +198,7 @@ const NotificationBell = ({ debug = false }) => {
 
       // Backend should automatically filter notifications for the authenticated user
       // based on the JWT token in the Authorization header
-      const response = await fetch('http://localhost:8081/api/v1/notifications', {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/notifications`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -250,7 +251,7 @@ const NotificationBell = ({ debug = false }) => {
   const markAsRead = async (notificationId) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch(`http://localhost:8081/api/v1/notifications/${notificationId}/read`, {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/notifications/${notificationId}/read`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -279,7 +280,7 @@ const NotificationBell = ({ debug = false }) => {
   const markAllAsRead = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:8081/api/v1/notifications/mark-all-read', {
+      const response = await fetch(`${KANBAN_API_URL}/api/v1/notifications/mark-all-read`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
